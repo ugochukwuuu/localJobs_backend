@@ -32,7 +32,7 @@ class LoginController extends Controller
             'message' => 'User logged in successfully',
             'code'=> 0,
             'user' => $user,
-            'token'=> $token
+            'token'=> $token.$user->id
         ], 200);
     }
 }

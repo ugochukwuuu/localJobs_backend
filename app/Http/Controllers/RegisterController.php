@@ -11,7 +11,8 @@ class RegisterController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required',
+            'role' => 'required'
         ]);
 
 
@@ -23,9 +24,16 @@ class RegisterController extends Controller
             $newUser->name = $request->name;
             $newUser->email = $request->email;
             $newUser->password = bcrypt($request->password);
+            $newUser->role = $request->role;
             $newUser->save();
             
-            $token = JWTAuth::fromUser($newUser);  
+            $customClaims = [
+                'user_role' => $request->role,
+                'user_id'=> $newUser->id,
+            ];
+
+            $token = JWTAuth::claims($customClaims)->fromUser($newUser);  
+            
             return response()->json([
                 'code'=>'0',
                 'message' => 'User created successfully',
