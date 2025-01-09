@@ -35,8 +35,8 @@ class RegisterController extends Controller
             $token = JWTAuth::claims($customClaims)->fromUser($newUser);  
             
             return response()->json([
-                'code'=>'0',
                 'message' => 'User created successfully',
+                'code'=>'0',
                 'user' => $newUser,
                 'token' => $token
             ], 201);

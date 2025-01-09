@@ -27,12 +27,18 @@ class LoginController extends Controller
                     'message' => "The password is incorrect"
                 ], 401);
             }
-            $token = JWTAuth::fromUser($user);  
+
+            $customClaims = [
+                'user_role' => $user->role,
+                'user_id'=> $user->id,
+            ];
+
+            $token = JWTAuth::claims($customClaims)->fromUser($user); 
         return response()->json([
             'message' => 'User logged in successfully',
             'code'=> 0,
             'user' => $user,
-            'token'=> $token.$user->id
+            'token'=> $token
         ], 200);
     }
 }
