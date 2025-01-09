@@ -64,6 +64,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    //a user can have one recruiter or one 
 }
 
 // namespace App\Models;
